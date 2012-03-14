@@ -1,4 +1,4 @@
-<table cellpadding="0" cellspacing="0">
+<table>
   <% @record = associated.empty? ? build_associated(column, parent_record) : associated.last -%>
   <%= render :partial => 'horizontal_subform_header', :locals => {:parent_record => parent_record, :record => @record} %>
 
