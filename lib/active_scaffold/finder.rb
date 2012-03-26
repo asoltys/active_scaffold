@@ -17,13 +17,13 @@ module ActiveScaffold
 
         where_clauses = []
         columns.each do |column|
-          where_clauses << ((column.column.nil? || column.column.text?) ? "#{column.search_sql} #{ActiveScaffold::Finder.like_operator} ?" : "#{column.search_sql} = ?")
+          where_clauses << "#{column.search_sql} #{ActiveScaffold::Finder.like_operator} ?"
         end
         phrase = "(#{where_clauses.join(' OR ')})"
 
         sql = ([phrase] * tokens.length).join(' AND ')
         tokens = tokens.collect do |value|
-          columns.collect {|column| (column.column.nil? || column.column.text?) ? like_pattern.sub('?', value) : column.column.type_cast(value)}
+          columns.collect {|column| like_pattern.sub('?', value)}
         end.flatten
 
         [sql, *tokens]
