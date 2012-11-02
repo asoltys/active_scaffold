@@ -5,7 +5,7 @@ jQuery(document).ready(function() {
     var date_picker = jQuery(this);
     if (typeof(date_picker.datepicker) == 'function') {
       if (!date_picker.hasClass('hasDatepicker')) {
-        date_picker.datepicker({onSelect: function() { this.focus() }});
+        date_picker.datepicker({onSelect: function() { this.blur() }, onClose: function() { $(this).change() }});
         date_picker.trigger('focus');
       }
     }
@@ -22,3 +22,4 @@ jQuery(document).ready(function() {
     return true;
   });
 });
+
