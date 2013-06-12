@@ -18,7 +18,7 @@ module ActiveScaffold
         where_clauses = []
         columns.each do |column|
           Array(column.search_sql).each do |search_sql|
-            where_clauses << "#{search_sql} #{(column.column.nil? || column.column.text?) ? ActiveScaffold::Finder.like_operator : '='} ?"
+            where_clauses << "#{search_sql} #{ActiveScaffold::Finder.like_operator} ?"
           end
         end
         phrase = where_clauses.join(' OR ')
@@ -26,7 +26,7 @@ module ActiveScaffold
         tokens.collect do |value|
           columns.inject([phrase]) do |condition, column|
             Array(column.search_sql).size.times do
-              condition.push((column.column.nil? || column.column.text?) ? like_pattern.sub('?', value) : column.column.type_cast(value))
+              condition.push(like_pattern.sub('?', value))
             end
             condition
           end
